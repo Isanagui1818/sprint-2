@@ -1,0 +1,78 @@
+# Ejercicio 2:
+-- Llistat dels països que estan fent compres.
+
+select company.country
+from transactions.transaction
+	LEFT JOIN transactions.company on (transaction.company_id = company.id);
+
+-- Listado de paises que realiza las compras    
+
+-- Des de quants països es realitzen les compres.
+
+select distinct company.country
+from transactions.transaction
+	LEFT JOIN transactions.company on (transaction.company_id = company.id);
+    
+-- 15 paises son los que hacen las compras
+
+-- Identifica la companyia amb la mitjana més gran de vendes.
+
+ select company_name, round(sum(amount)/count(amount),2) as media
+ from transactions.transaction
+	LEFT JOIN transactions.company on (transaction.company_id = company.id)
+where declined = 0
+group by company_name
+order by media desc
+limit 1;
+
+ select company_name, round(avg(amount),2) as media
+ from transactions.transaction
+	LEFT JOIN transactions.company on (transaction.company_id = company.id)
+where declined = 0
+group by company_name
+order by media desc
+limit 1;
+
+-- La compañía con mayor media de compras es Eget Ipsum LTd con 481.86
+
+# Ejercicio 3
+-- Mostra totes les transaccions realitzades per empreses d'Alemanya.
+ select *
+ from transactions.transaction
+ where company_id IN (
+					select id
+                    from transactions.company
+                    where country= 'Germany');
+                    
+-- Llista les empreses que han realitzat transaccions per un amount superior a la mitjana de totes les transaccions.
+
+select company_name
+from transactions.company
+where id in (
+			select company_id, avg(amount) as media
+            from transactions.transaction
+            group by company_id
+            having media > (
+							select avg(amount)
+                            from transactions.transaction)
+            );
+
+select company_name 
+from transactions.company
+where id in (
+			select company_id
+            from transactions.transaction
+            where declined = 0 and amount > (
+											select avg(amount)
+                                            from transactions.transaction))
+order by company_name;
+
+-- Eliminaran del sistema les empreses que no tenen transaccions registrades, entrega el llistat d'aquestes empreses.
+
+select id, company_id
+from transactions.transaction
+where company_id not in (
+						select id
+                        from transactions.company
+                        );
+                        
