@@ -17,14 +17,6 @@ from transactions.transaction
 
 -- Identifica la companyia amb la mitjana més gran de vendes.
 
- select company_name, round(sum(amount)/count(amount),2) as media
- from transactions.transaction
-	LEFT JOIN transactions.company on (transaction.company_id = company.id)
-where declined = 0
-group by company_name
-order by media desc
-limit 1;
-
  select company_name, round(avg(amount),2) as media
  from transactions.transaction
 	LEFT JOIN transactions.company on (transaction.company_id = company.id)
@@ -46,17 +38,6 @@ limit 1;
                     
 -- Llista les empreses que han realitzat transaccions per un amount superior a la mitjana de totes les transaccions.
 
-select company_name
-from transactions.company
-where id in (
-			select company_id, avg(amount) as media
-            from transactions.transaction
-            group by company_id
-            having media > (
-							select avg(amount)
-                            from transactions.transaction)
-            );
-
 select company_name 
 from transactions.company
 where id in (
@@ -64,7 +45,8 @@ where id in (
             from transactions.transaction
             where declined = 0 and amount > (
 											select avg(amount)
-                                            from transactions.transaction))
+                                            from transactions.transaction
+                                            where declined = 0))
 order by company_name;
 
 -- Eliminaran del sistema les empreses que no tenen transaccions registrades, entrega el llistat d'aquestes empreses.
