@@ -15,8 +15,7 @@ from transactions.transaction
     
 -- 15 paises son los que hacen las compras
 
--- Identifica la companyia amb la mitjana més gran de vendes. He utilitzat el filtre where declined = 0 
--- per agafar només les transaccións que s'han dut a terme en tots els exercicis
+-- Identifica la companyia amb la mitjana més gran de vendes.
 
  select company_name, round(avg(amount),2) as media
  from transactions.transaction
@@ -44,11 +43,11 @@ from transactions.company
 where id in (
 			select company_id
             from transactions.transaction
-            where declined = 0 and amount > (
-											select avg(amount)
-                                            from transactions.transaction
-                                            where declined = 0))
+            where amount > (
+							select avg(amount)
+							from transactions.transaction))
 order by company_name;
+# para este ejercicio no he usado el filtro where declined=0 ya que piden todas las transacciones más allà de que haya cobrado o no cobrado la empresa
 
 -- Eliminaran del sistema les empreses que no tenen transaccions registrades, entrega el llistat d'aquestes empreses.
 
