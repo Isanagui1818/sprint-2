@@ -15,7 +15,7 @@ from transactions.transaction
     
 -- 15 paises son los que hacen las compras
 
--- Identifica la companyia amb la mitjana més gran de vendes.
+-- Identifica la companyia amb la mitjana més gran de vendes. He utilitzat el filtre where declined = 0 per agafar només les transaccións que s'han dut a terme en tots els exercicis
 
  select company_name, round(avg(amount),2) as media
  from transactions.transaction
