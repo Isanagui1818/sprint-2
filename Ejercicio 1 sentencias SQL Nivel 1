@@ -1,5 +1,5 @@
 # Ejercicio 2:
--- Llistat dels països que estan fent compres.
+#2.1 Llistat dels països que estan fent compres.
 
 select company.country
 from transactions.transaction
@@ -7,7 +7,7 @@ from transactions.transaction
 
 -- Listado de paises que realiza las compras    
 
--- Des de quants països es realitzen les compres.
+# 2.2 Des de quants països es realitzen les compres.
 
 select distinct company.country
 from transactions.transaction
@@ -15,7 +15,7 @@ from transactions.transaction
     
 -- 15 paises son los que hacen las compras
 
--- Identifica la companyia amb la mitjana més gran de vendes.
+#2.3 Identifica la companyia amb la mitjana més gran de vendes.
 
  select company_name, round(avg(amount),2) as media
  from transactions.transaction
@@ -28,7 +28,7 @@ limit 1;
 -- La compañía con mayor media de compras es Eget Ipsum LTd con 481.86
 
 # Ejercicio 3
--- Mostra totes les transaccions realitzades per empreses d'Alemanya.
+#3.1 Mostra totes les transaccions realitzades per empreses d'Alemanya.
  select *
  from transactions.transaction
  where company_id IN (
@@ -36,7 +36,7 @@ limit 1;
                     from transactions.company
                     where country= 'Germany');
                     
--- Llista les empreses que han realitzat transaccions per un amount superior a la mitjana de totes les transaccions.
+#3.2 Llista les empreses que han realitzat transaccions per un amount superior a la mitjana de totes les transaccions.
 
 select company_name 
 from transactions.company
@@ -49,12 +49,11 @@ where id in (
 order by company_name;
 # para este ejercicio no he usado el filtro where declined=0 ya que piden todas las transacciones más allà de que haya cobrado o no cobrado la empresa
 
--- Eliminaran del sistema les empreses que no tenen transaccions registrades, entrega el llistat d'aquestes empreses.
+#3.3 Eliminaran del sistema les empreses que no tenen transaccions registrades, entrega el llistat d'aquestes empreses.
 
 select id, company_id
 from transactions.transaction
 where company_id not in (
 						select id
-                        from transactions.company
-                        );
+                        from transactions.company);
                         
