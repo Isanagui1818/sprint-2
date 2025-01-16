@@ -1,15 +1,15 @@
 # Ejercicio 2:
 #2.1 Llistat dels països que estan fent compres.
 
-select company.country
+select distinct company.country
 from transactions.transaction
 	LEFT JOIN transactions.company on (transaction.company_id = company.id);
 
--- Listado de paises que realiza las compras    
+-- Listado de paises que realizan las compras.    
 
 # 2.2 Des de quants països es realitzen les compres.
 
-select distinct company.country
+select count(distinct company.country) as N_paises
 from transactions.transaction
 	LEFT JOIN transactions.company on (transaction.company_id = company.id);
     
@@ -25,7 +25,7 @@ group by company_name
 order by media desc
 limit 1;
 
--- La compañía con mayor media de compras es Eget Ipsum LTd con 481.86
+-- La compañía con mayor media de compras es Eget Ipsum LTd con 481.86 he usado el filtro declined = 0 para escoger transciones efectuadas
 
 # Ejercicio 3
 #3.1 Mostra totes les transaccions realitzades per empreses d'Alemanya.
