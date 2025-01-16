@@ -9,6 +9,8 @@ group by date(timestamp)
 order by 2 desc
 limit 5;
 
+-- he utlizado el filtro declined=0 para quitar las transacciones que no se han efectuado
+
 /*Exercici 2
 Quina és la mitjana de vendes per país? Presenta els resultats ordenats de major a menor mitjà.*/
 
@@ -18,6 +20,8 @@ from transactions.company
 where declined= 0
 group by country
 order by media_compra desc;
+
+-- he utlizado el filtro declined=0 para quitar las transacciones que no se han efectuado
 
 /*
 Exercici 3
