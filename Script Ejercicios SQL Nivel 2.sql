@@ -21,7 +21,7 @@ where declined= 0
 group by country
 order by media_compra desc;
 
--- he utlizado el filtro declined=0 para quitar las transacciones que no se han efectuado
+-- he utlizado el filtro declined=0 para quitar las transacciones que no se han efectuado, pongo round 2 para que solo aparezcan 2 decimales
 
 /*
 Exercici 3
@@ -31,21 +31,21 @@ Per a això, et demanen la llista de totes les transaccions realitzades per empr
     Mostra el llistat aplicant solament subconsultes.
 */
 -- Mostra el llistat aplicant JOIN i subconsultes.
-select company_id,company_name, country
-from transactions.transaction
-	left join transactions.company on (transaction.company_id=transactions.company.id)
-where country in (
-				select country
-                from transactions.company
-                where company_name='Non Institute');
+select t.*
+from transactions.transaction as t
+	left join transactions.company on (t.company_id=company.id)
+where company_name != 'Non Institute'and country in (
+						select country
+						from transactions.company
+						where company_name='Non Institute');
 
 -- Mostra el llistat aplicant solament subconsultes.
 select *
-from transactions.transaction
+from transactions.transaction 
 where company_id in (
-					select id
-                    from transactions.company
-                    where country =(
-									select country
-                                    from transactions.company
-                                    where company_name='Non Institute'));
+		select id
+                from transactions.company
+                where company_name!= 'Non Institute' and country =(
+								select country
+        					                from transactions.company
+                                    				where company_name='Non Institute'));
